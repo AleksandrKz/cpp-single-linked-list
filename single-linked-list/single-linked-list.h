@@ -202,7 +202,7 @@ public:
      */
     Iterator EraseAfter(ConstIterator pos) noexcept;
 
-	void PopFront() noexcept;
+    void PopFront() noexcept;
 
     SingleLinkedList() = default;
     
@@ -280,8 +280,8 @@ SingleLinkedList<Type>::SingleLinkedList(const SingleLinkedList<Type>& other) {
 
 template <typename Type>
 SingleLinkedList<Type>::~SingleLinkedList(){
-        Clear();
-    }
+    Clear();
+}
 
 template <typename Type>
     template <typename It>
@@ -334,21 +334,21 @@ void SingleLinkedList<Type>::PopFront() noexcept {
 
 template <typename Type>
 SingleLinkedList<Type>& SingleLinkedList<Type>::operator=(const SingleLinkedList<Type>& rhs) {
-        if(this != &rhs){
-            auto rhs_copy(rhs);
-            swap(rhs_copy);
-        }
-        return *this;
+    if(this != &rhs){
+        auto rhs_copy(rhs);
+        swap(rhs_copy);
     }
+    return *this;
+}
 
 template <typename Type>
 bool SingleLinkedList<Type>::IsEmpty() const noexcept {
-        return size_ == 0;
+    return size_ == 0;
 }
 
 template <typename Type>
 size_t SingleLinkedList<Type>::GetSize() const noexcept {
-        return size_;
+    return size_;
 }
 
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <cstddef>
 #include <iterator>
 #include <utility>
@@ -109,6 +110,7 @@ class SingleLinkedList {
         // Вызов этого оператора у итератора, не указывающего на существующий элемент списка,
         // приводит к неопределённому поведению
         [[nodiscard]] reference operator*() const noexcept {
+            assert (node_ != nullptr);
             return node_->value;
         }
 
@@ -116,6 +118,7 @@ class SingleLinkedList {
         // Вызов этого оператора у итератора, не указывающего на существующий элемент списка,
         // приводит к неопределённому поведению
         [[nodiscard]] pointer operator->() const noexcept {
+            assert (node_ != nullptr);
             return &node_->value;
         }
 
@@ -258,6 +261,7 @@ typename SingleLinkedList<Type>::Iterator SingleLinkedList<Type>::InsertAfter(Co
 
 template <typename Type>
 typename SingleLinkedList<Type>::Iterator SingleLinkedList<Type>::EraseAfter(ConstIterator pos) noexcept {
+    assert (pos.node_ != nullptr);
 	Node* to_delete_node = pos.node_->next_node;
 	pos.node_->next_node = to_delete_node->next_node;
 	delete to_delete_node;
@@ -284,17 +288,17 @@ SingleLinkedList<Type>::~SingleLinkedList(){
 }
 
 template <typename Type>
-    template <typename It>
-	void SingleLinkedList<Type>::MakeList(It start, It end) {
-		std::stack<Type> tmp;
-		for(It it = start; it != end; ++it){
-			tmp.push(*it);
-		}
-		while(!tmp.empty()){
-			PushFront(tmp.top());
-			tmp.pop();
-		}
-	}
+template <typename It>
+void SingleLinkedList<Type>::MakeList(It start, It end) {
+    std::stack<Type> tmp;
+    for(It it = start; it != end; ++it){
+        tmp.push(*it);
+    }
+    while(!tmp.empty()){
+        PushFront(tmp.top());
+        tmp.pop();
+    }
+}
 
 template <typename Type>
 void SingleLinkedList<Type>::PushFront(const Type& value) {
@@ -309,7 +313,7 @@ void SingleLinkedList<Type>::Clear() noexcept {
 		delete head_.next_node;
 		head_.next_node = tmp;
 	}
-		size_ = 0;
+    size_ = 0;
 }
 
 template <typename Type>
@@ -326,6 +330,7 @@ void SingleLinkedList<Type>::swap(SingleLinkedList<Type>& other) noexcept {
 
 template <typename Type>
 void SingleLinkedList<Type>::PopFront() noexcept {
+    assert(size_ > 0);
 	Node* tmp = head_.next_node->next_node;
 	delete head_.next_node;
 	head_.next_node = tmp;
